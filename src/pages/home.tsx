@@ -16,7 +16,10 @@ const Home = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setQuery(searchInputRef.current?.value as string);
+
+    if (searchInputRef.current && searchInputRef.current.value.length >= 2) {
+      setQuery(searchInputRef.current?.value as string);
+    }
   };
 
   return (
