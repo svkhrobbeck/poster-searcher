@@ -41,7 +41,7 @@ const Home = () => {
           </p>
         )}
 
-        <div className="flex justify-center items-center flex-wrap pt-5 gap-4 rounded-md">
+        <div className="flex justify-center items-center flex-wrap py-5 gap-4 rounded-md">
           {movies.length ? (
             <>
               {movies.map(movie => (
