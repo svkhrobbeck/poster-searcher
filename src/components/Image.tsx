@@ -7,19 +7,18 @@ interface IProps {
   className?: string;
   alt: string;
   src: string;
+  object?: "cover" | "contain";
 }
 
-const Image = ({ className, src, alt }: IProps) => {
-  const { isLoaded } = useImageLoad(src);
+const Image = ({ className, object = "cover", ...props }: IProps) => {
+  const { isLoaded } = useImageLoad(props.src);
 
   return (
     <>
       {isLoaded ? (
-        <img className={cx("object-cover", className)} src={src} alt={alt} />
+        <img className={cx("rounded", `object-${object}`, className)} {...props} />
       ) : (
-        <div className="relative">
-          <Skeleton containerClassName="flex" className={className} />
-        </div>
+        <Skeleton containerClassName="flex" className={className} />
       )}
     </>
   );

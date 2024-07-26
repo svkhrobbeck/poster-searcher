@@ -14,9 +14,17 @@ export default {
       padding: "15px",
       screens: {
         md: "700px",
-        lg: "900px",
-        xl: "1100px",
+        lg: "1000px",
+        xl: "1200px",
       },
+    },
+    screens: {
+      xs: "450px",
+      sm: "576px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1536px",
     },
     extend: {
       keyframes: {
