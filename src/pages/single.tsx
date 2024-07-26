@@ -34,14 +34,19 @@ const Single = () => {
 
       <main>
         <section>
-          <h2 className="text-center font-semibold text-4xl py-3">{movie.title}</h2>
+          <h2 className="text-center text-3xl md:text-5xl font-semibold pt-3 mb-2 md:mb-5">
+            {movie.title}
+          </h2>
           <div className="container">
             <Tabs defaultValue="posters" className="w-full flex flex-col items-center py-5">
-              <div className="flex gap-3">
-                <Link className={cx(buttonVariants({ variant: "secondary" }))} to="/">
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link
+                  className={cx("w-full xs:w-auto", buttonVariants({ variant: "secondary" }))}
+                  to="/"
+                >
                   <Home className="size-5 mr-2" /> Home
                 </Link>
-                <TabsList>
+                <TabsList className="w-full xs:w-auto">
                   <TabsTrigger value="posters">Posters</TabsTrigger>
                   <TabsTrigger value="backdrops">Backdrops</TabsTrigger>
                   <TabsTrigger value="logos">Logos</TabsTrigger>
@@ -49,10 +54,10 @@ const Single = () => {
               </div>
 
               <TabsContent value="posters">
-                <div className="flex flex-wrap gap-3 justify-center">
+                <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
                   {images.posters.map(poster => (
                     <Card
-                      className="cursor-pointer max-w-full xs:max-w-[200px] md:max-w-[220px] w-full p-2"
+                      className="cursor-pointer max-w-[47%]  xs:max-w-[200px] md:max-w-[220px] w-full p-2"
                       onClick={() => downloadImage(poster.file_path, `${movie.title} Poster`)}
                       key={poster.file_path}
                     >
@@ -66,7 +71,7 @@ const Single = () => {
                 <div className="flex flex-wrap gap-3 justify-center">
                   {images.backdrops.map(backdrop => (
                     <Card
-                      className="cursor-pointer max-w-[320px] w-full p-2"
+                      className="cursor-pointer max-w-full xs:max-w-[150px] sm:max-w-[200px] md:max-w-[220px] w-full p-2"
                       onClick={() => downloadImage(backdrop.file_path, `${movie.title} Backdrop`)}
                       key={backdrop.file_path}
                     >
@@ -77,10 +82,10 @@ const Single = () => {
               </TabsContent>
 
               <TabsContent value="logos">
-                <div className="flex flex-wrap gap-3 justify-center">
+                <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
                   {images.logos.map(logo => (
                     <Card
-                      className="cursor-pointer max-w-[225px] w-full p-2"
+                      className="cursor-pointer max-w-[48%] xs:max-w-[155px] md:max-w-[200px] w-full p-2"
                       onClick={() => downloadImage(logo.file_path, `${movie.title} Logo`)}
                       key={logo.file_path}
                     >

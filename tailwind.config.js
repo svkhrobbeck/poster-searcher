@@ -13,8 +13,8 @@ export default {
       center: true,
       padding: "15px",
       screens: {
-        md: "700px",
-        lg: "1000px",
+        md: "1000px",
+        lg: "1100px",
         xl: "1200px",
       },
     },

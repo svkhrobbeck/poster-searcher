@@ -24,8 +24,10 @@ const Home = () => {
   return (
     <main>
       <div className="container">
-        <div className="pt-10 mb-2">
-          <h1 className="text-center text-5xl font-semibold mb-10">Poster Searcher</h1>
+        <div className="pt-3 md:pt-10 mb-2">
+          <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
+            Poster Searcher
+          </h1>
           <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
             <Input ref={searchInputRef} placeholder="search" autoFocus />
 
@@ -36,17 +38,17 @@ const Home = () => {
         </div>
 
         {!movies.length && (
-          <p className="text-center text-xl text-black/60">
+          <p className="text-center text-sm md:text-md lg:text-xl text-black/60">
             Search for any movie poster you want...
           </p>
         )}
 
-        <div className="flex justify-center items-center flex-wrap py-5 gap-4 rounded-md">
+        <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded-md">
           {movies.length ? (
             <>
               {movies.map(movie => (
                 <Card
-                  className="max-w-full xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
+                  className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
                   key={movie.id}
                 >
                   <Image
@@ -62,7 +64,7 @@ const Home = () => {
             <>
               {top_rated.map(movie => (
                 <Card
-                  className="max-w-full xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
+                  className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
                   key={movie.id}
                 >
                   <Image
