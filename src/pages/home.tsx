@@ -25,7 +25,7 @@ const Home = () => {
     <main>
       <div className="container">
         <div className="pt-10 mb-2">
-          <h1 className="text-center text-5xl font-bold mb-10">Poster Searcher</h1>
+          <h1 className="text-center text-5xl font-semibold mb-10">Poster Searcher</h1>
           <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
             <Input ref={searchInputRef} placeholder="search" autoFocus />
 

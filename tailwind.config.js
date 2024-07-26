@@ -27,6 +27,9 @@ export default {
       "2xl": "1536px",
     },
     extend: {
+      fontFamily: {
+        inter: "Inter, Roboto, sans-serif",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

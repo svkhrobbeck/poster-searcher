@@ -53,7 +53,7 @@ const Single = () => {
                   {images.posters.map(poster => (
                     <Card
                       className="cursor-pointer max-w-full xs:max-w-[200px] md:max-w-[220px] w-full p-2"
-                      onClick={() => downloadImage(poster.file_path, `${movie.title}_poster`)}
+                      onClick={() => downloadImage(poster.file_path, `${movie.title} Poster`)}
                       key={poster.file_path}
                     >
                       <Image className="w-full aspect-[2/3]" src={poster.file_path} alt="poster" />
@@ -67,7 +67,7 @@ const Single = () => {
                   {images.backdrops.map(backdrop => (
                     <Card
                       className="cursor-pointer max-w-[320px] w-full p-2"
-                      onClick={() => downloadImage(backdrop.file_path, `${movie.title}_backdrop`)}
+                      onClick={() => downloadImage(backdrop.file_path, `${movie.title} Backdrop`)}
                       key={backdrop.file_path}
                     >
                       <Image className="w-full aspect-video" src={backdrop.file_path} alt="bg" />
@@ -81,7 +81,7 @@ const Single = () => {
                   {images.logos.map(logo => (
                     <Card
                       className="cursor-pointer max-w-[225px] w-full p-2"
-                      onClick={() => downloadImage(logo.file_path, `${movie.title}_logo`)}
+                      onClick={() => downloadImage(logo.file_path, `${movie.title} Logo`)}
                       key={logo.file_path}
                     >
                       <Image
