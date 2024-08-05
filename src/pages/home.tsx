@@ -1,5 +1,5 @@
 import { FormEvent, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Search } from "lucide-react";
 
 import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
@@ -11,14 +11,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const Home = () => {
-  const [query, setQuery] = useState<string>("");
+  const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const [search, setSearch] = useState<string>(params.get("q") || "");
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const { items: movies } = useMoviesList(query);
+  const { items: movies } = useMoviesList(search);
   const { items: top_rated } = useTopList();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setQuery(searchInputRef.current?.value as string);
+    const value = searchInputRef.current?.value as string;
+
+    setSearch(value);
+    navigate("?" + new URLSearchParams({ q: value }).toString());
   };
 
   return (
@@ -29,7 +34,7 @@ const Home = () => {
             Poster Searcher
           </h1>
           <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
-            <Input ref={searchInputRef} placeholder="search" autoFocus />
+            <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
 
             <Button type="submit">
               <Search className="text-white" />
