@@ -16,9 +16,12 @@ import * as ShadSelect from "@/components/ui/select";
 const Home = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
+  const type = params.get("type") as SearchUnionType;
+
   const [search, setSearch] = useState<string>(params.get("q") || "");
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const { items: movies } = useMoviesList(search, params.get("type") as SearchUnionType);
+
+  const { items: movies } = useMoviesList(search, type);
   const { items: top_rated } = useTopList();
 
   const advancedNavigate = (sets: string[][] = [], removes: string[] = []) => {
@@ -38,7 +41,7 @@ const Home = () => {
     e.preventDefault();
     const value = searchInputRef.current?.value as string;
 
-    if (!params.get("type")) {
+    if (!type) {
       alert("select search type!");
     }
 
@@ -56,7 +59,7 @@ const Home = () => {
           <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
             <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
             <ShadSelect.Select
-              defaultValue={params.get("type") || "movie"}
+              defaultValue={type || ""}
               onValueChange={value => advancedNavigate([["type", value]])}
             >
               <ShadSelect.SelectTrigger className="w-[180px]">
@@ -95,7 +98,7 @@ const Home = () => {
                     src={movie.poster_path}
                     alt={movie.title}
                   />
-                  <Link className="absolute inset-0" to={`/${movie.id}`} />
+                  <Link className="absolute inset-0" to={`/${movie.id}?type=${type}`} />
                 </Card>
               ))}
             </>
@@ -111,7 +114,7 @@ const Home = () => {
                     src={movie.poster_path}
                     alt={movie.title}
                   />
-                  <Link className="absolute inset-0" to={`/${movie.id}`} />
+                  <Link className="absolute inset-0" to={`/${movie.id}?type=movie`} />
                 </Card>
               ))}
             </>

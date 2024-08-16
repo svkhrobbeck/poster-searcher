@@ -12,10 +12,13 @@ export const TopList = (): AxiosPromise<Types.IApi.List> => {
   return http.get("/movie/top_rated");
 };
 
-export const Single = (id: string): AxiosPromise<Types.IApi.Single> => {
-  return http.get(`/movie/${id}`);
+export const Single = (id: string, type: SearchUnionType): AxiosPromise<Types.IApi.Single> => {
+  return http.get(`/${type}/${id}`);
 };
 
-export const ImagesList = (id: string): AxiosPromise<Types.IApi.ImagesList> => {
-  return http.get(`/movie/${id}/images`);
+export const ImagesList = (
+  id: string,
+  type: SearchUnionType
+): AxiosPromise<Types.IApi.ImagesList> => {
+  return http.get(`/${type}/${id}/images`);
 };

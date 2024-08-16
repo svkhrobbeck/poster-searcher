@@ -1,6 +1,6 @@
 import cx from "classnames";
 import Helmet from "react-helmet";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import { useImagesList, useSingle } from "@/modules/movies/hooks";
 
@@ -12,11 +12,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import downloadImage from "@/helpers/download-image";
 import { buttonVariants } from "@/components/ui/button";
 import { Home } from "lucide-react";
+import { SearchUnionType } from "@/helpers/interfaces";
 
 const Single = () => {
   const id = useParams().id || "";
-  const { item: movie } = useSingle(id);
-  const { item: images, isFetched } = useImagesList(id);
+  const [params] = useSearchParams();
+  const type = params.get("type") as SearchUnionType;
+
+  const { item: movie } = useSingle(id, type);
+  const { item: images, isFetched } = useImagesList(id, type);
 
   if (!isFetched) {
     return (
@@ -29,13 +33,13 @@ const Single = () => {
   return (
     <>
       <Helmet>
-        <title>{movie.original_title}</title>
+        <title>{movie.title || movie.original_title || movie.original_name}</title>
       </Helmet>
 
       <main>
         <section>
           <h2 className="text-center text-3xl md:text-5xl font-semibold pt-3 mb-2 md:mb-5">
-            {movie.title}
+            {movie.title || movie.original_title || movie.original_name}
           </h2>
           <div className="container">
             <Tabs defaultValue="posters" className="w-full flex flex-col items-center py-5">

@@ -21,6 +21,7 @@ export const Single = (item?: any): Types.Entity.Data => {
     release_date: get(item, "release_date") || "",
     vote_average: get(item, "vote_average") || 0,
     original_title: get(item, "original_title") || "",
+    original_name: get(item, "original_name") || "",
     original_language: get(item, "original_language") || "",
   };
 };
