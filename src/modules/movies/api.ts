@@ -1,10 +1,11 @@
 import { AxiosPromise } from "axios";
 
+import { SearchUnionType } from "@/helpers/interfaces";
 import { http } from "@/services";
 import * as Types from "./types";
 
-export const List = (query: string): AxiosPromise<Types.IApi.List> => {
-  return http.get("/search/movie", { params: { query } });
+export const List = (query: string, type: SearchUnionType): AxiosPromise<Types.IApi.List> => {
+  return http.get(`/search/${type}`, { params: { query } });
 };
 
 export const TopList = (): AxiosPromise<Types.IApi.List> => {

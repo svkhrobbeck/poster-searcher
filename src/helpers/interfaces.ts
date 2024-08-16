@@ -1,3 +1,5 @@
+import { searchValues } from "./constants";
+
 export interface IMovie {
   adult: boolean;
   backdrop_path: string;
@@ -23,3 +25,5 @@ export interface IPoster {
   vote_count: number;
   width: number;
 }
+
+export type SearchUnionType = (typeof searchValues)[number];

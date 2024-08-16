@@ -4,14 +4,15 @@ import get from "lodash/get";
 import * as Api from "../api";
 import * as Types from "../types";
 import * as Mappers from "../mappers";
+import { SearchUnionType } from "@/helpers/interfaces";
 
-const useList = (query: string) => {
+const useList = (query: string, type: SearchUnionType) => {
   const initialData = { items: [].map(item => Mappers.Single(item)), meta: Mappers.Meta() };
 
   const { data = initialData, ...args } = useQuery<Types.IQuery.List, string>({
-    queryKey: ["movies", "search_list", query],
+    queryKey: ["movies", "search_list", query, type],
     queryFn: async () => {
-      const { data } = await Api.List(query);
+      const { data } = await Api.List(query, type);
       const items = get(data, "results").map(item => Mappers.Single(item));
       const meta = Mappers.Meta(data);
 
