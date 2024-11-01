@@ -3,11 +3,12 @@ import get from "lodash/get";
 import { BASE_BG_URL } from "@/helpers/constants";
 import * as Types from "./types";
 
-export const Single = (item?: any): Types.Entity.Data => {
+export const Single = (item?: any, type?: string): Types.Entity.Data => {
   const poster_path = get(item, "poster_path") ? BASE_BG_URL + get(item, "poster_path") : "";
   const backdrop_path = get(item, "backdrop_path") ? BASE_BG_URL + get(item, "backdrop_path") : "";
 
   return {
+    ...(type ? { type } : {}),
     poster_path,
     backdrop_path,
     id: get(item, "id") || 0,

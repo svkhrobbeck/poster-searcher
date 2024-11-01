@@ -4,6 +4,7 @@ import get from "lodash/get";
 import * as Api from "../api";
 import * as Types from "../types";
 import * as Mappers from "../mappers";
+import { searchValues } from "@/helpers/constants";
 
 const useList = () => {
   const initialData = { items: [].map(item => Mappers.Single(item)), meta: Mappers.Meta() };
@@ -11,11 +12,15 @@ const useList = () => {
   const { data = initialData, ...args } = useQuery<Types.IQuery.List, string>({
     queryKey: ["movies", "search_list"],
     queryFn: async () => {
-      const { data } = await Api.TopList();
-      const items = get(data, "results").map(item => Mappers.Single(item));
-      const meta = Mappers.Meta(data);
+      const items: Types.Entity.Data[] = [];
 
-      return { items, meta };
+      for (const type of searchValues) {
+        const { data } = await Api.TopList(type);
+        const mappedItems = get(data, "results").map(item => Mappers.Single(item, type));
+        items.push(...mappedItems);
+      }
+
+      return { items };
     },
   });
 

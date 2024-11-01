@@ -8,8 +8,8 @@ export const List = (query: string, type: SearchUnionType): AxiosPromise<Types.I
   return http.get(`/search/${type}`, { params: { query } });
 };
 
-export const TopList = (): AxiosPromise<Types.IApi.List> => {
-  return http.get("/movie/top_rated");
+export const TopList = (type: string): AxiosPromise<Types.IApi.List> => {
+  return http.get(`/${type}/top_rated`);
 };
 
 export const Single = (id: string, type: SearchUnionType): AxiosPromise<Types.IApi.Single> => {

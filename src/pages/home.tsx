@@ -1,29 +1,24 @@
+import cx from "classnames";
 import { Search } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
-import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
-
-import { searchValues } from "@/helpers/constants";
-import { SearchUnionType } from "@/helpers/interfaces";
-
 import Image from "@/components/Image";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import * as ShadSelect from "@/components/ui/select";
+import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
 
 const Home = () => {
   const navigate = useNavigate();
   const [params] = useSearchParams();
-  const type = params.get("type") as SearchUnionType;
 
-  const [search, setSearch] = useState<string>(params.get("q") || "");
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const [search, setSearch] = useState<string>(params.get("q") || "");
 
-  const { items: movies } = useMoviesList(search, type);
   const { items: top_rated } = useTopList();
+  const { items: movies } = useMoviesList(search);
 
   const advancedNavigate = (sets: string[][] = [], removes: string[] = []) => {
     const params = new URLSearchParams(location.search);
@@ -42,10 +37,6 @@ const Home = () => {
     e.preventDefault();
     const value = searchInputRef.current?.value as string;
 
-    if (!type) {
-      alert("Select search-content type!");
-    }
-
     setSearch(value);
     advancedNavigate([["q", value]]);
   };
@@ -55,29 +46,19 @@ const Home = () => {
       <Helmet>
         <title>Posters</title>
       </Helmet>
+
       <main>
         <div className="container">
           <div className="pt-3 md:pt-10 mb-2">
             <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
               Posters
             </h1>
-            <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
+            <form
+              className={cx("flex mx-auto max-w-lg gap-2", movies.length && "mb-16")}
+              onSubmit={onSubmit}
+            >
               <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
-              <ShadSelect.Select
-                defaultValue={type || ""}
-                onValueChange={value => advancedNavigate([["type", value]])}
-              >
-                <ShadSelect.SelectTrigger className="w-[180px]">
-                  <ShadSelect.SelectValue placeholder="Choose content type" />
-                </ShadSelect.SelectTrigger>
-                <ShadSelect.SelectContent>
-                  {searchValues.map((sv, idx) => (
-                    <ShadSelect.SelectItem value={sv.value} key={idx}>
-                      {sv.title}
-                    </ShadSelect.SelectItem>
-                  ))}
-                </ShadSelect.SelectContent>
-              </ShadSelect.Select>
+
               <Button type="submit">
                 <Search className="text-white" />
               </Button>
@@ -85,7 +66,7 @@ const Home = () => {
           </div>
 
           {!movies.length && (
-            <p className="text-center text-sm md:text-md lg:text-xl text-black/60">
+            <p className="text-center text-sm md:text-md lg:text-xl text-black/60 mb-8">
               Search for any movie poster you want...
             </p>
           )}
@@ -103,7 +84,7 @@ const Home = () => {
                       src={movie.poster_path}
                       alt={movie.title}
                     />
-                    <Link className="absolute inset-0" to={`/${type}/${movie.id}`} />
+                    <Link className="absolute inset-0" to={`/${movie.type}/${movie.id}`} />
                   </Card>
                 ))}
               </>
@@ -119,7 +100,7 @@ const Home = () => {
                       src={movie.poster_path}
                       alt={movie.title}
                     />
-                    <Link className="absolute inset-0" to={`/movie/${movie.id}`} />
+                    <Link className="absolute inset-0" to={`/${movie.type}/${movie.id}`} />
                   </Card>
                 ))}
               </>

@@ -1,7 +1,9 @@
 import { IMovie, IPoster } from "@/helpers/interfaces";
 
 export declare namespace Entity {
-  export interface Data extends IMovie {}
+  export interface Data extends IMovie {
+    type?: string;
+  }
 
   export interface Image extends IPoster {}
 
@@ -29,7 +31,6 @@ export declare namespace IApi {
 export declare namespace IQuery {
   export interface List {
     items: Entity.Data[];
-    meta: Entity.Meta;
   }
   export interface Single {
     item: Entity.Data;
