@@ -43,7 +43,7 @@ const Home = () => {
     const value = searchInputRef.current?.value as string;
 
     if (!type) {
-      alert("select search type!");
+      alert("Select search-content type!");
     }
 
     setSearch(value);
