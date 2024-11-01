@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
 import DisableDevtool from "disable-devtool";
+import { Route, Routes } from "react-router-dom";
 
 import Spinner from "./components/Spinner";
 const Home = lazy(() => import("./pages/home"));
