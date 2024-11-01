@@ -1,21 +1,29 @@
-import { buttonVariants } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
 import { Link, useLocation } from "react-router-dom";
+
+import { buttonVariants } from "@/components/ui/button";
 
 const NotFound = () => {
   const { pathname: route } = useLocation();
 
   return (
-    <main className="flex justify-center items-center">
-      <div className="flex items-center flex-col gap-3">
-        <p className="font-semibold text-3xl uppercase">
-          <span className="text-green-600">{route}</span> page not found
-        </p>
+    <>
+      <Helmet>
+        <title>{route} page not found</title>
+      </Helmet>
 
-        <Link className={buttonVariants({ variant: "default" })} to="/">
-          Home
-        </Link>
-      </div>
-    </main>
+      <main className="flex justify-center items-center">
+        <div className="flex items-center flex-col gap-3">
+          <p className="font-semibold text-3xl uppercase">
+            <span className="text-green-600">{route}</span> page not found
+          </p>
+
+          <Link className={buttonVariants({ variant: "default" })} to="/">
+            Home
+          </Link>
+        </div>
+      </main>
+    </>
   );
 };
 

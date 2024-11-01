@@ -1,19 +1,26 @@
 import { Link } from "react-router-dom";
 import { buttonVariants } from "@/components/ui/button";
+import { Helmet } from "react-helmet";
 
 const Error = () => {
   return (
-    <main className="flex justify-center items-center min-h-screen p-4">
-      <div className="flex items-center flex-col gap-3 text-center">
-        <p className="font-semibold text-2xl sm:text-3xl lg:text-4xl uppercase">
-          <span className="text-red-600">Error:</span> You tried to bypass the developer's rules.
-        </p>
+    <>
+      <Helmet>
+        <title>Unexpected Error:(</title>
+      </Helmet>
 
-        <Link className={buttonVariants({ variant: "default" })} to="/">
-          Home
-        </Link>
-      </div>
-    </main>
+      <main className="flex justify-center items-center min-h-screen p-4">
+        <div className="flex items-center flex-col gap-3 text-center">
+          <p className="font-semibold text-2xl sm:text-3xl lg:text-4xl uppercase">
+            <span className="text-red-600">Error:</span> You tried to bypass the developer's rules.
+          </p>
+
+          <Link className={buttonVariants({ variant: "default" })} to="/">
+            Home
+          </Link>
+        </div>
+      </main>
+    </>
   );
 };
 

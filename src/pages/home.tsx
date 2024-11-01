@@ -1,4 +1,5 @@
 import { Search } from "lucide-react";
+import { Helmet } from "react-helmet";
 import { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -50,76 +51,83 @@ const Home = () => {
   };
 
   return (
-    <main>
-      <div className="container">
-        <div className="pt-3 md:pt-10 mb-2">
-          <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">Posters</h1>
-          <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
-            <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
-            <ShadSelect.Select
-              defaultValue={type || ""}
-              onValueChange={value => advancedNavigate([["type", value]])}
-            >
-              <ShadSelect.SelectTrigger className="w-[180px]">
-                <ShadSelect.SelectValue placeholder="Choose content type" />
-              </ShadSelect.SelectTrigger>
-              <ShadSelect.SelectContent>
-                {searchValues.map((sv, idx) => (
-                  <ShadSelect.SelectItem value={sv.value} key={idx}>
-                    {sv.title}
-                  </ShadSelect.SelectItem>
-                ))}
-              </ShadSelect.SelectContent>
-            </ShadSelect.Select>
-            <Button type="submit">
-              <Search className="text-white" />
-            </Button>
-          </form>
-        </div>
+    <>
+      <Helmet>
+        <title>Posters</title>
+      </Helmet>
+      <main>
+        <div className="container">
+          <div className="pt-3 md:pt-10 mb-2">
+            <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
+              Posters
+            </h1>
+            <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
+              <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
+              <ShadSelect.Select
+                defaultValue={type || ""}
+                onValueChange={value => advancedNavigate([["type", value]])}
+              >
+                <ShadSelect.SelectTrigger className="w-[180px]">
+                  <ShadSelect.SelectValue placeholder="Choose content type" />
+                </ShadSelect.SelectTrigger>
+                <ShadSelect.SelectContent>
+                  {searchValues.map((sv, idx) => (
+                    <ShadSelect.SelectItem value={sv.value} key={idx}>
+                      {sv.title}
+                    </ShadSelect.SelectItem>
+                  ))}
+                </ShadSelect.SelectContent>
+              </ShadSelect.Select>
+              <Button type="submit">
+                <Search className="text-white" />
+              </Button>
+            </form>
+          </div>
 
-        {!movies.length && (
-          <p className="text-center text-sm md:text-md lg:text-xl text-black/60">
-            Search for any movie poster you want...
-          </p>
-        )}
-
-        <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded-md">
-          {movies.length ? (
-            <>
-              {movies.map(movie => (
-                <Card
-                  className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
-                  key={movie.id}
-                >
-                  <Image
-                    className="w-full aspect-[2/3]"
-                    src={movie.poster_path}
-                    alt={movie.title}
-                  />
-                  <Link className="absolute inset-0" to={`/${type}/${movie.id}`} />
-                </Card>
-              ))}
-            </>
-          ) : (
-            <>
-              {top_rated.map(movie => (
-                <Card
-                  className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
-                  key={movie.id}
-                >
-                  <Image
-                    className="w-full aspect-[2/3]"
-                    src={movie.poster_path}
-                    alt={movie.title}
-                  />
-                  <Link className="absolute inset-0" to={`/movie/${movie.id}`} />
-                </Card>
-              ))}
-            </>
+          {!movies.length && (
+            <p className="text-center text-sm md:text-md lg:text-xl text-black/60">
+              Search for any movie poster you want...
+            </p>
           )}
+
+          <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded-md">
+            {movies.length ? (
+              <>
+                {movies.map(movie => (
+                  <Card
+                    className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
+                    key={movie.id}
+                  >
+                    <Image
+                      className="w-full aspect-[2/3]"
+                      src={movie.poster_path}
+                      alt={movie.title}
+                    />
+                    <Link className="absolute inset-0" to={`/${type}/${movie.id}`} />
+                  </Card>
+                ))}
+              </>
+            ) : (
+              <>
+                {top_rated.map(movie => (
+                  <Card
+                    className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
+                    key={movie.id}
+                  >
+                    <Image
+                      className="w-full aspect-[2/3]"
+                      src={movie.poster_path}
+                      alt={movie.title}
+                    />
+                    <Link className="absolute inset-0" to={`/movie/${movie.id}`} />
+                  </Card>
+                ))}
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 
