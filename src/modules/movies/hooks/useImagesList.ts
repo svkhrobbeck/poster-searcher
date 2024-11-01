@@ -26,4 +26,5 @@ const useImagesList = (id: string, type: SearchUnionType) => {
 
   return { ...data, ...args };
 };
+
 export default useImagesList;

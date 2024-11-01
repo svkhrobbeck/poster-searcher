@@ -1,6 +1,6 @@
+import { Search } from "lucide-react";
 import { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Search } from "lucide-react";
 
 import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
 
@@ -53,9 +53,7 @@ const Home = () => {
     <main>
       <div className="container">
         <div className="pt-3 md:pt-10 mb-2">
-          <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
-            Poster Searcher
-          </h1>
+          <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">Posters</h1>
           <form className="flex mx-auto max-w-lg gap-2" onSubmit={onSubmit}>
             <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
             <ShadSelect.Select
@@ -66,9 +64,9 @@ const Home = () => {
                 <ShadSelect.SelectValue placeholder="type" />
               </ShadSelect.SelectTrigger>
               <ShadSelect.SelectContent>
-                {searchValues.map((val, idx) => (
-                  <ShadSelect.SelectItem value={val} key={idx}>
-                    {val}
+                {searchValues.map((sv, idx) => (
+                  <ShadSelect.SelectItem value={sv.value} key={idx}>
+                    {sv.title}
                   </ShadSelect.SelectItem>
                 ))}
               </ShadSelect.SelectContent>

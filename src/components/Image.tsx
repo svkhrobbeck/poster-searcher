@@ -1,7 +1,6 @@
 import cx from "classnames";
+import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
-
-import useImageLoad from "@/hooks/useImageLoad";
 
 interface IProps {
   className?: string;
@@ -11,16 +10,15 @@ interface IProps {
 }
 
 const Image = ({ className, object = "cover", ...props }: IProps) => {
-  const { isLoaded } = useImageLoad(props.src);
-
   return (
-    <>
-      {isLoaded ? (
-        <img className={cx("rounded", `object-${object}`, className)} {...props} />
-      ) : (
-        <Skeleton containerClassName="flex" className={className} />
-      )}
-    </>
+    <Suspense fallback={<Skeleton containerClassName="flex" />}>
+      <img
+        loading="lazy"
+        className={cx("rounded", `object-${object}`, className)}
+        {...props}
+        title="yuklab olish uchun rasm ustiga bosing"
+      />
+    </Suspense>
   );
 };
 

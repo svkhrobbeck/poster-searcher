@@ -27,4 +27,4 @@ export interface IPoster {
   width: number;
 }
 
-export type SearchUnionType = (typeof searchValues)[number];
+export type SearchUnionType = (typeof searchValues)[number]["value"];
