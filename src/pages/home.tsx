@@ -96,7 +96,7 @@ const Home = () => {
                     src={movie.poster_path}
                     alt={movie.title}
                   />
-                  <Link className="absolute inset-0" to={`/${movie.id}?type=${type}`} />
+                  <Link className="absolute inset-0" to={`/${type}/${movie.id}`} />
                 </Card>
               ))}
             </>
@@ -112,7 +112,7 @@ const Home = () => {
                     src={movie.poster_path}
                     alt={movie.title}
                   />
-                  <Link className="absolute inset-0" to={`/${movie.id}?type=movie`} />
+                  <Link className="absolute inset-0" to={`/movie/${movie.id}`} />
                 </Card>
               ))}
             </>

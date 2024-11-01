@@ -1,7 +1,7 @@
 import cx from "classnames";
 import Helmet from "react-helmet";
 import { Home } from "lucide-react";
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { useImagesList, useSingle } from "@/modules/movies/hooks";
 
@@ -14,12 +14,12 @@ import { buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Single = () => {
-  const id = useParams().id || "";
-  const [params] = useSearchParams();
-  const type = params.get("type") as SearchUnionType;
+  const params = useParams<{ id: string; type: SearchUnionType }>();
+  const id = params.id || "";
+  const type = params.type;
 
-  const { item: movie } = useSingle(id, type);
-  const { item: images, isFetched } = useImagesList(id, type);
+  const { item: movie } = useSingle(id, type!);
+  const { item: images, isFetched } = useImagesList(id, type!);
 
   if (!isFetched)
     return (

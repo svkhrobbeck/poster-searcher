@@ -3,16 +3,15 @@ import { Route, Routes } from "react-router-dom";
 import DisableDevtool from "disable-devtool";
 
 import Spinner from "./components/Spinner";
-import NotFound from "./pages/not-found";
 const Home = lazy(() => import("./pages/home"));
+const Error = lazy(() => import("./pages/error"));
 const Single = lazy(() => import("./pages/single"));
+const NotFound = lazy(() => import("./pages/not-found"));
 
 const App = () => {
   DisableDevtool({
-    url: "/404",
-    ignore: () => {
-      return import.meta.env.DEV;
-    },
+    url: "/error",
+    ignore: () => import.meta.env.DEV,
   });
 
   return (
@@ -25,9 +24,8 @@ const App = () => {
     >
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:id" element={<Single />} />
-
-        <Route path="/404" element={<NotFound />} />
+        <Route path="/:type/:id" element={<Single />} />
+        <Route path="/error" element={<Error />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
