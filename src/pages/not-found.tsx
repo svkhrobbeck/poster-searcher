@@ -10,6 +10,7 @@ const NotFound = () => {
         <p className="font-semibold text-3xl uppercase">
           <span className="text-green-600">{route}</span> page not found
         </p>
+
         <Link className={buttonVariants({ variant: "default" })} to="/">
           Home
         </Link>
