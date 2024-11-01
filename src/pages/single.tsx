@@ -67,7 +67,7 @@ const Single = () => {
                         className="w-full aspect-[2/3]"
                         src={poster.file_path}
                         alt="poster"
-                        title="yuklab olish uchun rasm ustiga bosing"
+                        title="Click on the image to download"
                       />
                     </Card>
                   ))}
@@ -86,7 +86,7 @@ const Single = () => {
                         className="w-full aspect-video"
                         src={backdrop.file_path}
                         alt="bg"
-                        title="yuklab olish uchun rasm ustiga bosing"
+                        title="Click on the image to download"
                       />
                     </Card>
                   ))}
@@ -106,7 +106,7 @@ const Single = () => {
                         object="contain"
                         src={logo.file_path}
                         alt="logo"
-                        title="yuklab olish uchun rasm ustiga bosing"
+                        title="Click on the image to download"
                       />
                     </Card>
                   ))}
