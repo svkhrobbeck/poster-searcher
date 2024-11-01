@@ -8,7 +8,7 @@ import { useImagesList, useSingle } from "@/modules/movies/hooks";
 import Image from "@/components/Image";
 import Spinner from "@/components/Spinner";
 import { Card } from "@/components/ui/card";
-import lazyDownloadImage from "@/helpers/lazy-download-image";
+import downloadImage from "@/helpers/download-image";
 import { SearchUnionType } from "@/helpers/interfaces";
 import { buttonVariants } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,13 +21,12 @@ const Single = () => {
   const { item: movie } = useSingle(id, type);
   const { item: images, isFetched } = useImagesList(id, type);
 
-  if (!isFetched) {
+  if (!isFetched)
     return (
       <main className="flex justify-center items-center">
         <Spinner />
       </main>
     );
-  }
 
   return (
     <>
@@ -61,10 +60,15 @@ const Single = () => {
                   {images.posters.map(poster => (
                     <Card
                       className="cursor-pointer max-w-[47%]  xs:max-w-[200px] md:max-w-[220px] w-full p-2"
-                      onClick={() => lazyDownloadImage(poster.file_path, `${movie.title} Poster`)}
+                      onClick={() => downloadImage(poster.file_path, `${movie.title} Poster`)}
                       key={poster.file_path}
                     >
-                      <Image className="w-full aspect-[2/3]" src={poster.file_path} alt="poster" />
+                      <Image
+                        className="w-full aspect-[2/3]"
+                        src={poster.file_path}
+                        alt="poster"
+                        title="yuklab olish uchun rasm ustiga bosing"
+                      />
                     </Card>
                   ))}
                 </div>
@@ -75,12 +79,15 @@ const Single = () => {
                   {images.backdrops.map(backdrop => (
                     <Card
                       className="cursor-pointer max-w-full xs:max-w-[150px] sm:max-w-[200px] md:max-w-[220px] w-full p-2"
-                      onClick={() =>
-                        lazyDownloadImage(backdrop.file_path, `${movie.title} Backdrop`)
-                      }
+                      onClick={() => downloadImage(backdrop.file_path, `${movie.title} Backdrop`)}
                       key={backdrop.file_path}
                     >
-                      <Image className="w-full aspect-video" src={backdrop.file_path} alt="bg" />
+                      <Image
+                        className="w-full aspect-video"
+                        src={backdrop.file_path}
+                        alt="bg"
+                        title="yuklab olish uchun rasm ustiga bosing"
+                      />
                     </Card>
                   ))}
                 </div>
@@ -91,7 +98,7 @@ const Single = () => {
                   {images.logos.map(logo => (
                     <Card
                       className="cursor-pointer max-w-[48%] xs:max-w-[155px] md:max-w-[200px] w-full p-2"
-                      onClick={() => lazyDownloadImage(logo.file_path, `${movie.title} Logo`)}
+                      onClick={() => downloadImage(logo.file_path, `${movie.title} Logo`)}
                       key={logo.file_path}
                     >
                       <Image
@@ -99,6 +106,7 @@ const Single = () => {
                         object="contain"
                         src={logo.file_path}
                         alt="logo"
+                        title="yuklab olish uchun rasm ustiga bosing"
                       />
                     </Card>
                   ))}

@@ -1,8 +1,8 @@
 import cx from "classnames";
-import { Suspense } from "react";
+import { ComponentProps, Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 
-interface IProps {
+interface IProps extends ComponentProps<"img"> {
   className?: string;
   alt: string;
   src: string;
@@ -12,12 +12,7 @@ interface IProps {
 const Image = ({ className, object = "cover", ...props }: IProps) => {
   return (
     <Suspense fallback={<Skeleton containerClassName="flex" />}>
-      <img
-        loading="lazy"
-        className={cx("rounded", `object-${object}`, className)}
-        {...props}
-        title="yuklab olish uchun rasm ustiga bosing"
-      />
+      <img loading="lazy" className={cx("rounded", `object-${object}`, className)} {...props} />
     </Suspense>
   );
 };
