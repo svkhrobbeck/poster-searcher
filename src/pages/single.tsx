@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 
 import { useImagesList, useSingle } from "@/modules/movies/hooks";
 
-import Image from "@/components/Image";
+import LazyImage from "@/components/LazyImage";
 import Spinner from "@/components/Spinner";
 import { Card } from "@/components/ui/card";
 import downloadImage from "@/helpers/download-image";
@@ -63,7 +63,7 @@ const Single = () => {
                       onClick={() => downloadImage(poster.file_path, `${movie.title} Poster`)}
                       key={poster.file_path}
                     >
-                      <Image
+                      <LazyImage
                         className="w-full aspect-[2/3]"
                         src={poster.file_path}
                         alt="poster"
@@ -82,7 +82,7 @@ const Single = () => {
                       onClick={() => downloadImage(backdrop.file_path, `${movie.title} Backdrop`)}
                       key={backdrop.file_path}
                     >
-                      <Image
+                      <LazyImage
                         className="w-full aspect-video"
                         src={backdrop.file_path}
                         alt="bg"
@@ -101,7 +101,7 @@ const Single = () => {
                       onClick={() => downloadImage(logo.file_path, `${movie.title} Logo`)}
                       key={logo.file_path}
                     >
-                      <Image
+                      <LazyImage
                         className="w-full aspect-video object-contain"
                         object="contain"
                         src={logo.file_path}

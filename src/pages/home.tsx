@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet";
 import { FormEvent, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
-import Image from "@/components/Image";
+import LazyImage from "@/components/LazyImage";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -79,7 +79,7 @@ const Home = () => {
                     className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
                     key={movie.id}
                   >
-                    <Image
+                    <LazyImage
                       className="w-full aspect-[2/3]"
                       src={movie.poster_path}
                       alt={movie.title}
@@ -95,7 +95,7 @@ const Home = () => {
                     className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
                     key={movie.id}
                   >
-                    <Image
+                    <LazyImage
                       className="w-full aspect-[2/3]"
                       src={movie.poster_path}
                       alt={movie.title}
