@@ -61,7 +61,7 @@ const Home = () => {
               onValueChange={value => advancedNavigate([["type", value]])}
             >
               <ShadSelect.SelectTrigger className="w-[180px]">
-                <ShadSelect.SelectValue placeholder="type" />
+                <ShadSelect.SelectValue placeholder="Choose content type" />
               </ShadSelect.SelectTrigger>
               <ShadSelect.SelectContent>
                 {searchValues.map((sv, idx) => (
