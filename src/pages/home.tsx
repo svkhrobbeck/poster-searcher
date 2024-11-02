@@ -53,6 +53,7 @@ const Home = () => {
               onChange={debouncedSearch}
               placeholder="Search..."
               autoFocus
+              type="search"
             />
           </div>
 
