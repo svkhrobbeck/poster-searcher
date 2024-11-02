@@ -3,15 +3,11 @@ import Helmet from "react-helmet";
 import { Home } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 
-import { useImagesList, useSingle } from "@/modules/movies/hooks";
-
-import LazyImage from "@/components/LazyImage";
-import Spinner from "@/components/Spinner";
-import { Card } from "@/components/ui/card";
-import downloadImage from "@/helpers/download-image";
+import { downloadImage } from "@/lib/utils";
 import { SearchUnionType } from "@/helpers/interfaces";
-import { buttonVariants } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { LazyImage, Spinner } from "@/components/shared";
+import { useImagesList, useSingle } from "@/modules/movies/hooks";
+import { buttonVariants, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
 
 const Single = () => {
   const params = useParams<{ id: string; type: SearchUnionType }>();

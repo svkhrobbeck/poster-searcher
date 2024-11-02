@@ -1,12 +1,12 @@
 import { lazy, Suspense, forwardRef } from "react";
 import Skeleton from "react-loading-skeleton";
-import { ImageProps } from "./Image";
+import { ImageProps } from "./image";
 
-const LazyImageComponent = lazy(() => import("./Image"));
+const ImageComponentAsLazy = lazy(() => import("./image"));
 
 const LazyImage = forwardRef<HTMLImageElement, ImageProps>((props, imgRef) => (
   <Suspense fallback={<Skeleton className={props.className} containerClassName="flex" />}>
-    <LazyImageComponent {...props} ref={imgRef} />
+    <ImageComponentAsLazy {...props} ref={imgRef} />
   </Suspense>
 ));
 

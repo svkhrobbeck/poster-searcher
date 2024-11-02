@@ -1,19 +1,16 @@
 import { lazy, Suspense } from "react";
-import DisableDevtool from "disable-devtool";
+import disableDevtool from "disable-devtool";
 import { Route, Routes } from "react-router-dom";
 
-import Spinner from "./components/Spinner";
-import Footer from "./components/Footer";
-const Home = lazy(() => import("./pages/home"));
-const Error = lazy(() => import("./pages/error"));
-const Single = lazy(() => import("./pages/single"));
-const NotFound = lazy(() => import("./pages/not-found"));
+const Home = lazy(() => import("@/pages/home"));
+const Error = lazy(() => import("@/pages/error"));
+const Single = lazy(() => import("@/pages/single"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+
+import { Footer, Spinner } from "@/components/shared";
 
 const App = () => {
-  DisableDevtool({
-    url: "/error",
-    ignore: () => import.meta.env.DEV,
-  });
+  disableDevtool({ url: "/error", ignore: () => import.meta.env.DEV });
 
   return (
     <>

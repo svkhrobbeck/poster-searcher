@@ -1,13 +1,11 @@
 import cx from "classnames";
-import { Search } from "lucide-react";
+import debounce from "lodash/debounce";
 import { Helmet } from "react-helmet";
-import { FormEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
-import LazyImage from "@/components/LazyImage";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Card, Input } from "@/components/ui";
+import { LazyImage } from "@/components/shared";
 import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
 
 const Home = () => {
@@ -20,26 +18,20 @@ const Home = () => {
   const { items: top_rated } = useTopList();
   const { items: movies } = useMoviesList(search);
 
-  const advancedNavigate = (sets: string[][] = [], removes: string[] = []) => {
+  const advancedNavigate = (path: string, sets: string[][] = [], removes: string[] = []) => {
     const params = new URLSearchParams(location.search);
-    sets.forEach(([key, value]) => {
-      params.set(key, value);
-    });
-
-    removes.forEach(key => {
-      params.delete(key);
-    });
-
-    navigate("?" + params.toString());
+    sets.forEach(([key, value]) => params.set(key, value));
+    removes.forEach(key => params.delete(key));
+    navigate(path + "?" + params.toString());
   };
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const value = searchInputRef.current?.value as string;
-
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
     setSearch(value);
-    advancedNavigate([["q", value]]);
+    advancedNavigate("", [["q", value]]);
   };
+
+  const debouncedSearch = debounce(handleSearch, 300);
 
   return (
     <>
@@ -53,16 +45,15 @@ const Home = () => {
             <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
               Posters
             </h1>
-            <form
-              className={cx("flex mx-auto max-w-lg gap-2", movies.length && "mb-16")}
-              onSubmit={onSubmit}
-            >
-              <Input defaultValue={search} ref={searchInputRef} placeholder="search" autoFocus />
 
-              <Button type="submit">
-                <Search className="text-white" />
-              </Button>
-            </form>
+            <Input
+              className={cx("max-w-2xl mx-auto", movies.length && "mb-16")}
+              defaultValue={search}
+              ref={searchInputRef}
+              onChange={debouncedSearch}
+              placeholder="Search..."
+              autoFocus
+            />
           </div>
 
           {!movies.length && (
