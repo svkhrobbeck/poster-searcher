@@ -1,21 +1,22 @@
 import cx from "classnames";
 import Helmet from "react-helmet";
 import { Home } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { downloadImage } from "@/lib/utils";
 import { SearchUnionType } from "@/helpers/interfaces";
 import { LazyImage, Spinner } from "@/components/shared";
 import { useImagesList, useSingle } from "@/modules/movies/hooks";
 import { buttonVariants, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+import { tabValues } from "@/helpers/constants";
 
 const Single = () => {
-  const params = useParams<{ id: string; type: SearchUnionType }>();
-  const id = params.id || "";
-  const type = params.type;
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { id, type } = useParams<{ id: string; type: SearchUnionType }>();
 
-  const { item: movie } = useSingle(id, type!);
-  const { item: images, isFetched } = useImagesList(id, type!);
+  const { item: movie } = useSingle(id || "", type!);
+  const { item: images, isFetched } = useImagesList(id || "", type!);
 
   if (!isFetched)
     return (
@@ -36,7 +37,10 @@ const Single = () => {
             {movie.title || movie.original_title || movie.original_name}
           </h2>
           <div className="container">
-            <Tabs defaultValue="posters" className="w-full flex flex-col items-center py-5">
+            <Tabs
+              defaultValue={searchParams.get("tab") || "posters"}
+              className="w-full flex flex-col items-center py-5"
+            >
               <div className="flex flex-wrap justify-center gap-3">
                 <Link
                   className={cx("w-full xs:w-auto", buttonVariants({ variant: "secondary" }))}
@@ -45,9 +49,15 @@ const Single = () => {
                   <Home className="size-5 mr-2" /> Home
                 </Link>
                 <TabsList className="w-full xs:w-auto">
-                  <TabsTrigger value="posters">Posters</TabsTrigger>
-                  <TabsTrigger value="backdrops">Backdrops</TabsTrigger>
-                  <TabsTrigger value="logos">Logos</TabsTrigger>
+                  {tabValues.map((tab, idx) => (
+                    <TabsTrigger
+                      key={idx}
+                      value={tab.value}
+                      onClick={() => navigate(`?tab=${tab.value}`)}
+                    >
+                      {tab.title}
+                    </TabsTrigger>
+                  ))}
                 </TabsList>
               </div>
 
