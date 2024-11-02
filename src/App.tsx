@@ -1,6 +1,6 @@
-import { lazy, Suspense } from "react";
 import disableDevtool from "disable-devtool";
-import { Route, Routes } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 const Home = lazy(() => import("@/pages/home"));
 const Error = lazy(() => import("@/pages/error"));
@@ -10,7 +10,12 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 import { Footer, Spinner } from "@/components/shared";
 
 const App = () => {
+  const location = useLocation();
   disableDevtool({ url: "/error", ignore: () => import.meta.env.DEV });
+
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+  }, [location]);
 
   return (
     <>
