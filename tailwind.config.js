@@ -93,5 +93,10 @@ export default {
       },
     },
   },
-  plugins: [import("tailwindcss-animate")],
+  plugins: [
+    import("tailwind-scrollbar"),
+    import("tailwind-scrollbar-hide"),
+    import("tailwindcss-textshadow"),
+    import("tailwindcss-animate"),
+  ],
 };
