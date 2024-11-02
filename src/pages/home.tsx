@@ -58,12 +58,12 @@ const Home = () => {
           </div>
 
           {!movies.length && (
-            <p className="text-center text-sm md:text-md lg:text-xl text-black/60 mb-8">
+            <p className="text-center text-sm md:text-md lg:text-xl mb-8">
               Search for any movie poster you want...
             </p>
           )}
 
-          <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded-md">
+          <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded">
             {movies.length ? (
               <>
                 {movies.map(movie => (

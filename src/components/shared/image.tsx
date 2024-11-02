@@ -28,6 +28,8 @@ const Image = forwardRef<HTMLImageElement, ImageProps>(
         {!loaded && (
           <Skeleton
             className={className}
+            baseColor="#334155"
+            highlightColor="#0f172a"
             containerClassName="flex absolute top-0 left-0 w-full h-full"
           />
         )}
