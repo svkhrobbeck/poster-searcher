@@ -32,8 +32,8 @@ const Single = () => {
       </Helmet>
 
       <main>
-        <section>
-          <h2 className="text-center text-3xl md:text-5xl font-semibold pt-3 mb-2 md:mb-5">
+        <section className="pt-6">
+          <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold pt-3 mb-2 md:mb-5">
             {movie.title || movie.original_title || movie.original_name}
           </h2>
           <div className="container">

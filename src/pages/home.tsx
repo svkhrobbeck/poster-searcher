@@ -42,7 +42,7 @@ const Home = () => {
       <main>
         <div className="container">
           <div className="pt-3 md:pt-10 mb-2">
-            <h1 className="text-center text-4xl md:text-5xl font-semibold mb-5 md:mb-10">
+            <h1 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold pt-3 mb-5 md:mb-10">
               Posters
             </h1>
 
