@@ -27,4 +27,22 @@ export interface IPoster {
   width: number;
 }
 
+export interface IVideo {
+  name: string;
+  key: string;
+  site: string;
+  size: number;
+  type: ContentType;
+  official: true;
+  published_at: string;
+  id: string;
+}
+
+export type ContentType =
+  | "Trailer"
+  | "Clip"
+  | "Featurette"
+  | "Opening Credits"
+  | "Behind the Scenes";
+
 export type SearchUnionType = (typeof searchValues)[number];

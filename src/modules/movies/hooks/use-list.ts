@@ -7,7 +7,7 @@ import * as Mappers from "../mappers";
 import { searchValues } from "@/helpers/constants";
 
 const useList = (query: string) => {
-  const initialData = { items: [].map(item => Mappers.Single(item)), meta: Mappers.Meta() };
+  const initialData = { items: [].map(item => Mappers.Single(item)) };
 
   const { data = initialData, ...args } = useQuery<Types.IQuery.List, string>({
     queryKey: ["movies", "search_list", query],

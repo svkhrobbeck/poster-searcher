@@ -16,6 +16,13 @@ export const Single = (id: string, type: SearchUnionType): AxiosPromise<Types.IA
   return http.get(`/${type}/${id}`);
 };
 
+export const VideosList = (
+  id: string,
+  type: SearchUnionType
+): AxiosPromise<Types.IApi.VideosList> => {
+  return http.get(`/${type}/${id}/videos`);
+};
+
 export const ImagesList = (
   id: string,
   type: SearchUnionType

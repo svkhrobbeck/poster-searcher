@@ -40,6 +40,17 @@ export const Image = (item?: any): Types.Entity.Image => {
   };
 };
 
+export const Video = (item?: any): Types.Entity.Video => ({
+  id: get(item, "id", ""),
+  key: get(item, "key", ""),
+  name: get(item, "name", ""),
+  site: get(item, "site", ""),
+  size: get(item, "size", ""),
+  type: get(item, "type", ""),
+  official: get(item, "official", true),
+  published_at: get(item, "published_at", ""),
+});
+
 export const Meta = (item?: any): Types.Entity.Meta => ({
   totalPages: get(item, "total_pages") || 1,
   page: get(item, "page") || 1,

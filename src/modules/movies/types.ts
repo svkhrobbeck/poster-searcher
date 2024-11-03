@@ -1,4 +1,4 @@
-import { IMovie, IPoster } from "@/helpers/interfaces";
+import { IMovie, IPoster, IVideo } from "@/helpers/interfaces";
 
 export declare namespace Entity {
   export interface Data extends IMovie {
@@ -6,6 +6,8 @@ export declare namespace Entity {
   }
 
   export interface Image extends IPoster {}
+
+  export interface Video extends IVideo {}
 
   export interface Meta {
     totalPages: number;
@@ -26,6 +28,10 @@ export declare namespace IApi {
     logos: Entity.Image[];
     posters: Entity.Image[];
   }
+
+  export interface VideosList {
+    results: Entity.Video[];
+  }
 }
 
 export declare namespace IQuery {
@@ -42,5 +48,9 @@ export declare namespace IQuery {
       logos: Entity.Image[];
       posters: Entity.Image[];
     };
+  }
+
+  export interface VideosList {
+    items: Entity.Video[];
   }
 }

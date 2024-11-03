@@ -6,11 +6,11 @@ import * as Types from "../types";
 import * as Mappers from "../mappers";
 import { searchValues } from "@/helpers/constants";
 
-const useList = () => {
-  const initialData = { items: [].map(item => Mappers.Single(item)), meta: Mappers.Meta() };
+const useTopList = () => {
+  const initialData = { items: [].map(item => Mappers.Single(item)) };
 
   const { data = initialData, ...args } = useQuery<Types.IQuery.List, string>({
-    queryKey: ["movies", "search_list"],
+    queryKey: ["movies", "top_list"],
     queryFn: async () => {
       const items: Types.Entity.Data[] = [];
 
@@ -27,4 +27,4 @@ const useList = () => {
   return { ...data, ...args };
 };
 
-export default useList;
+export default useTopList;

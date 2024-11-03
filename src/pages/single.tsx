@@ -4,11 +4,11 @@ import { Home } from "lucide-react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { downloadImage } from "@/lib/utils";
+import { tabValues } from "@/helpers/constants";
 import { SearchUnionType } from "@/helpers/interfaces";
 import { LazyImage, Spinner } from "@/components/shared";
-import { useImagesList, useSingle } from "@/modules/movies/hooks";
+import { useImagesList, useSingle, useVideosList } from "@/modules/movies/hooks";
 import { buttonVariants, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-import { tabValues } from "@/helpers/constants";
 
 const Single = () => {
   const navigate = useNavigate();
@@ -17,6 +17,11 @@ const Single = () => {
 
   const { item: movie } = useSingle(id || "", type!);
   const { item: images, isFetched } = useImagesList(id || "", type!);
+  const { items: videos } = useVideosList(id || "", type!, searchParams.get("tab") === "trailers");
+
+  const trailers = videos.filter(video => video.type === "Trailer");
+
+  console.log(trailers);
 
   if (!isFetched)
     return (
@@ -116,6 +121,27 @@ const Single = () => {
                       />
                     </Card>
                   ))}
+                </div>
+              </TabsContent>
+
+              <TabsContent value="trailers">
+                <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                  {trailers.length ? (
+                    trailers.map(trailer => (
+                      <iframe
+                        className="aspect-video h-auto sm:min-w-[80vw] md:min-w-[650px] min-w-[90vw] mb-2"
+                        loading="lazy"
+                        src={`https://www.youtube.com/embed/${trailer.key}`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      />
+                    ))
+                  ) : (
+                    <>Trailers not found</>
+                  )}
                 </div>
               </TabsContent>
             </Tabs>

@@ -4,6 +4,7 @@ export const searchValues = ["movie", "tv"] as const;
 
 export const tabValues = [
   { value: "posters", title: "Posters" },
-  { value: "backdrops", title: "Backdrops" },
+  { value: "backdrops", title: "Backgrounds" },
   { value: "logos", title: "Logos" },
+  { value: "trailers", title: "Trailers" },
 ];
