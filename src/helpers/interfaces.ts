@@ -1,4 +1,13 @@
+import { FC } from "react";
+
 import { searchValues } from "./constants";
+
+export interface ITab {
+  label: string;
+  value: string;
+  components: FC[];
+  inactive?: boolean;
+}
 
 export interface IMovie {
   adult: boolean;

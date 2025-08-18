@@ -21,8 +21,6 @@ const Single = () => {
 
   const trailers = videos.filter(video => video.type === "Trailer");
 
-  console.log(trailers);
-
   if (!isFetched)
     return (
       <main className="flex justify-center items-center">
