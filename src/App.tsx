@@ -1,4 +1,4 @@
-import disableDevtool from "disable-devtool";
+// import disableDevtool from "disable-devtool";
 import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -11,7 +11,7 @@ import { Footer, Spinner } from "@/components/shared";
 
 const App = () => {
   const location = useLocation();
-  disableDevtool({ url: "/error", ignore: () => import.meta.env.DEV });
+  // disableDevtool({ url: "/error", ignore: () => import.meta.env.DEV });
 
   useEffect(() => {
     document.documentElement.scrollTop = 0;
