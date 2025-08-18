@@ -6,7 +6,8 @@ const config = {
   },
   api: {
     baseUrl: ENV.VITE_APP_BASE_API_URL,
-    baseApiKey: ENV.VITE_APP_BASE_API_KEY,
+    baseApiToken: ENV.VITE_APP_BASE_API_TOKEN,
+    // baseApiKey: ENV.VITE_APP_BASE_API_KEY,
   },
 };
 
