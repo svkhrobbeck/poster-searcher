@@ -7,6 +7,7 @@ import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
 const queryResponseHandler = (data: any) => {
   if (!data) return;
 
+
   const message = data["message"] ?? extractErrorMessage(data);
   const error = data["error"];
 

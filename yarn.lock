@@ -3708,10 +3708,10 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-utilzify@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/utilzify/-/utilzify-1.4.6.tgz#0cc2777f8be3199b5b2704918760a7660dd366f5"
-  integrity sha512-BkgisnrKjJ/yay54VIdrAgS4ZvzHvDj4wUaPAxdDn9TGbw/o5qH50ELt+2j4HUMAYM+d2YL/jWFrqSjMOWy8Kg==
+utilzify@^1.4.10:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/utilzify/-/utilzify-1.4.10.tgz#1f90dba5854f2b4eba5409e4eb2fcf5ab27939a0"
+  integrity sha512-A9O6c3dO/B/XghuRHz/hEw+xf1ODFM5rU/71yko12cWCIlfNtuSHlMXqu4TX8TuDp+2AGyD3clVSz3Iw25KGgw==
   dependencies:
     axios "^1.7.9"
     exceljs "^4.4.0"

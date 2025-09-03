@@ -7,23 +7,31 @@ export interface ImageProps extends ComponentProps<"img"> {
   alt: string;
   src: string;
   object?: "cover" | "contain";
+  fallbackSrc?: string;
 }
 
 const Image = forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, object = "cover", ...props }, imgRef) => {
+  ({ className, object = "cover", fallbackSrc, ...props }, imgRef) => {
     const [loaded, setLoaded] = useState(false);
+    const [error, setError] = useState(false);
 
     const handleImageLoad = () => setLoaded(true);
+    const handleImageError = () => {
+      setError(true);
+      setLoaded(true);
+    };
 
     return (
       <div className="relative">
         <img
           loading="lazy"
           onLoad={handleImageLoad}
+          onError={handleImageError}
           ref={imgRef}
           style={{ opacity: loaded ? 1 : 0, transition: "opacity 0.3s ease-in-out" }}
           className={cx("rounded", `object-${object}`, className)}
           {...props}
+          src={error && fallbackSrc ? fallbackSrc : props.src}
         />
         {!loaded && (
           <Skeleton

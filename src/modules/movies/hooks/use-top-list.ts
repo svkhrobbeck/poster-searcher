@@ -16,7 +16,8 @@ const useTopList = () => {
 
       for (const type of searchValues) {
         const { data } = await Api.TopList(type);
-        const mappedItems = get(data, "results").map(item => Mappers.Single(item, type));
+        const results = get(data, "results", []) || [];
+        const mappedItems = results.map(item => Mappers.Single(item, type));
         items.push(...mappedItems);
       }
 
