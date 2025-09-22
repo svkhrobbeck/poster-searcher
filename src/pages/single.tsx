@@ -1,6 +1,7 @@
 import cx from "classnames";
 import Helmet from "react-helmet";
 import { Home } from "lucide-react";
+import { getFormattedDate } from "utilzify";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { downloadImage } from "@/lib/utils";
@@ -9,7 +10,6 @@ import { SearchUnionType } from "@/helpers/interfaces";
 import { LazyImage, Spinner } from "@/components/shared";
 import { useImagesList, useSingle, useVideosList } from "@/modules/movies/hooks";
 import { buttonVariants, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
-import { getFormattedDate } from "utilzify";
 
 const Single = () => {
   const navigate = useNavigate();

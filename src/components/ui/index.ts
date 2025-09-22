@@ -4,5 +4,7 @@ export * from "./card";
 export * from "./input";
 export * from "./pagination";
 export * from "./select";
+export * from "./dialog";
+export * from "./alert-dialog";
 export * from "./tabs";
 export * from "./tooltip";
