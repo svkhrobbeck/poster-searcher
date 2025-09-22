@@ -9,6 +9,7 @@ import { SearchUnionType } from "@/helpers/interfaces";
 import { LazyImage, Spinner } from "@/components/shared";
 import { useImagesList, useSingle, useVideosList } from "@/modules/movies/hooks";
 import { buttonVariants, Card, Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
+import { getFormattedDate } from "utilzify";
 
 const Single = () => {
   const navigate = useNavigate();
@@ -39,6 +40,11 @@ const Single = () => {
           <h2 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold pt-3 mb-2 md:mb-5">
             {movie.title || movie.original_title || movie.original_name}
           </h2>
+          {movie.release_date && (
+            <h3 className="text-center mb-2 md:mb-5">
+              {getFormattedDate(movie.release_date, "DD.MM.YYYY")}
+            </h3>
+          )}
           <div className="container">
             <Tabs
               defaultValue={searchParams.get("tab") || "posters"}
@@ -66,10 +72,12 @@ const Single = () => {
 
               <TabsContent value="posters">
                 <div className="flex flex-wrap gap-2 sm:gap-4 justify-center">
-                  {images.posters.map(poster => (
+                  {images.posters.map((poster, idx) => (
                     <Card
                       className="cursor-pointer max-w-[47%]  xs:max-w-[200px] md:max-w-[220px] w-full p-2"
-                      onClick={() => downloadImage(poster.file_path, `${movie.title} Poster`)}
+                      onClick={() =>
+                        downloadImage(poster.file_path, `${movie.title} Poster ${idx + 1}`)
+                      }
                       key={poster.file_path}
                     >
                       <LazyImage
@@ -85,10 +93,12 @@ const Single = () => {
 
               <TabsContent value="backdrops">
                 <div className="flex flex-wrap gap-3 justify-center">
-                  {images.backdrops.map(backdrop => (
+                  {images.backdrops.map((backdrop, idx) => (
                     <Card
                       className="cursor-pointer max-w-full xs:max-w-[150px] sm:max-w-[200px] md:max-w-[220px] w-full p-2"
-                      onClick={() => downloadImage(backdrop.file_path, `${movie.title} Backdrop`)}
+                      onClick={() =>
+                        downloadImage(backdrop.file_path, `${movie.title} Backdrop ${idx + 1}`)
+                      }
                       key={backdrop.file_path}
                     >
                       <LazyImage
@@ -104,10 +114,12 @@ const Single = () => {
 
               <TabsContent value="logos">
                 <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
-                  {images.logos.map(logo => (
+                  {images.logos.map((logo, idx) => (
                     <Card
                       className="cursor-pointer max-w-[48%] xs:max-w-[155px] md:max-w-[200px] w-full p-2"
-                      onClick={() => downloadImage(logo.file_path, `${movie.title} Logo`)}
+                      onClick={() =>
+                        downloadImage(logo.file_path, `${movie.title} Logo ${idx + 1}`)
+                      }
                       key={logo.file_path}
                     >
                       <LazyImage

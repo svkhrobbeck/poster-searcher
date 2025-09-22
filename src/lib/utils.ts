@@ -1,11 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
+import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+import { delayRun } from "utilzify";
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs));
 };
 
 export const downloadImage = async (src: string, name?: string) => {
+  const toastId = toast.loading(`${name}ni yuklash boshlandi...`);
   const srcUrl = "https://corsproxy.io/?" + encodeURIComponent(src);
 
   const image = await fetch(srcUrl);
@@ -18,4 +21,7 @@ export const downloadImage = async (src: string, name?: string) => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+  URL.revokeObjectURL(imageURL);
+  toast.success(`${name}ni yuklash yakunlandi!`, { id: toastId });
+  await delayRun(3000, () => toast.dismiss(toastId));
 };
