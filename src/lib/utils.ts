@@ -9,7 +9,7 @@ export const cn = (...inputs: ClassValue[]) => {
 
 export const downloadImage = async (src: string, name?: string) => {
   const toastId = toast.loading(`${name}ni yuklash boshlandi...`);
-  const srcUrl = "https://corsproxy.io/?" + encodeURIComponent(src);
+  const srcUrl = encodeURIComponent(src);
 
   const image = await fetch(srcUrl);
   const imageBlob = await image.blob();
