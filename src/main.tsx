@@ -18,11 +18,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <Toaster
         richColors
         expand
-        position="top-right"
+        position="top-center"
         closeButton
-        duration={25000}
+        duration={5000}
         theme="dark"
-        visibleToasts={12}
+        visibleToasts={5}
       />
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-right" />
     </QueryClientProvider>

@@ -1,34 +1,36 @@
-// import disableDevtool from "disable-devtool";
 import { lazy, Suspense, useEffect } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 const Home = lazy(() => import("@/pages/home"));
 const Error = lazy(() => import("@/pages/error"));
-const Single = lazy(() => import("@/pages/single"));
+const Search = lazy(() => import("@/pages/search"));
+const Saved = lazy(() => import("@/pages/saved"));
+const Person = lazy(() => import("@/pages/person"));
+const Details = lazy(() => import("@/pages/details"));
+const Discover = lazy(() => import("@/pages/discover"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
-import { Footer, Spinner } from "@/components/shared";
+import { Footer, Header, PageLoader } from "@/components/shared";
 
 const App = () => {
-  const location = useLocation();
-  // disableDevtool({ url: "/error", ignore: () => import.meta.env.DEV });
+  const { pathname } = useLocation();
 
+  // scroll to top on page change only (not on tab / filter query changes)
   useEffect(() => {
-    document.documentElement.scrollTop = 0;
-  }, [location]);
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
 
   return (
     <>
-      <Suspense
-        fallback={
-          <main className="flex justify-center items-center">
-            <Spinner />
-          </main>
-        }
-      >
+      <Header />
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:type/:id" element={<Single />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/discover" element={<Discover />} />
+          <Route path="/saved" element={<Saved />} />
+          <Route path="/person/:id" element={<Person />} />
+          <Route path="/:type/:id" element={<Details />} />
           <Route path="/error" element={<Error />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

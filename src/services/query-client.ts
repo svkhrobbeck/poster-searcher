@@ -1,22 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { toast } from "sonner";
-import { extractErrorMessage } from "utilzify";
-import { MutationCache, QueryCache, QueryClient } from "@tanstack/react-query";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
 
-const queryResponseHandler = (data: any) => {
-  if (!data) return;
-
-
-  const message = data["message"] ?? extractErrorMessage(data);
-  const error = data["error"];
-
-  if (data["type"] === "ERROR" && error) {
-    toast.error(error);
-  } else if (data["type"] === "SUCCESS" && message) {
-    toast.success(message);
-  }
-};
+import { getErrorMessage } from "./http";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,17 +9,13 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
       refetchOnMount: false,
-      retry: false,
-      staleTime: 1000 * 60 * 5,
+      retry: 1,
+      staleTime: 1000 * 60 * 30,
+      gcTime: 1000 * 60 * 60,
     },
   },
   queryCache: new QueryCache({
-    onSuccess: queryResponseHandler,
-    onError: queryResponseHandler,
-  }),
-  mutationCache: new MutationCache({
-    onSuccess: queryResponseHandler,
-    onError: queryResponseHandler,
+    onError: error => toast.error(getErrorMessage(error), { id: "query-error" }),
   }),
 });
 

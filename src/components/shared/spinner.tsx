@@ -1,17 +1,8 @@
-import { TailSpin } from "react-loader-spinner";
+import cx from "classnames";
+import { Loader2 } from "lucide-react";
 
-const Spinner = () => {
-  return (
-    <TailSpin
-      visible={true}
-      height="80"
-      width="80"
-      color="#4fa94d"
-      ariaLabel="tail-spin-loading"
-      radius="1"
-      wrapperStyle={{}}
-      wrapperClass=""
-    />
-  );
-};
+const Spinner = ({ className }: { className?: string }) => (
+  <Loader2 className={cx("size-10 animate-spin text-slate-400", className)} aria-label="Loading" />
+);
+
 export default Spinner;

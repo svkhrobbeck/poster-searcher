@@ -1,9 +1,13 @@
-import axios, { getAdapter } from "axios";
+import axios, { getAdapter, isAxiosError } from "axios";
 
 import config from "@/config";
-import { axiosErrorHandler } from "utilzify";
 
-const msgLogger = (_d: unknown, msg: string) => console.error(msg);
+export const getErrorMessage = (error: unknown): string => {
+  if (isAxiosError(error)) {
+    return error.response?.data?.status_message || error.message;
+  }
+  return error instanceof Error ? error.message : String(error);
+};
 
 const http = axios.create({
   baseURL: config.api.baseUrl,
@@ -13,7 +17,12 @@ const http = axios.create({
   adapter: getAdapter("fetch"),
 });
 
-http.interceptors.request.use(c => c, axiosErrorHandler(msgLogger, true));
-http.interceptors.response.use(c => c, axiosErrorHandler(msgLogger, true));
+http.interceptors.response.use(
+  res => res,
+  error => {
+    console.error(getErrorMessage(error));
+    return Promise.reject(error);
+  }
+);
 
 export default http;

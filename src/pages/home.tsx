@@ -1,104 +1,123 @@
-import cx from "classnames";
-import debounce from "lodash/debounce";
 import { Helmet } from "react-helmet";
-import { ChangeEvent, useRef, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Info } from "lucide-react";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 
-import { Card, Input } from "@/components/ui";
-import { LazyImage } from "@/components/shared";
-import { useList as useMoviesList, useTopList } from "@/modules/movies/hooks";
+import { getYear } from "@/lib/utils";
+import { useRecent } from "@/hooks/use-library";
+import { buttonVariants } from "@/components/ui/button";
+import { MediaRow, Rating } from "@/components/shared";
+import { ANIME_GENRE_ID, ANIME_LANGUAGE, imageUrl } from "@/helpers/constants";
+import { useCategory, useDiscover, useTrending } from "@/modules/movies/hooks";
+
+const animeFilters = { sort: "popularity.desc", genre: ANIME_GENRE_ID, lang: ANIME_LANGUAGE } as const;
 
 const Home = () => {
-  const navigate = useNavigate();
   const [params] = useSearchParams();
 
-  const searchInputRef = useRef<HTMLInputElement>(null);
-  const [search, setSearch] = useState<string>(params.get("q") || "");
+  const trending = useTrending("all", "day");
+  const popularMovies = useCategory("movie", "popular");
+  const popularTv = useCategory("tv", "popular");
+  const anime = useDiscover("tv", animeFilters);
+  const topRated = useCategory("movie", "top_rated");
+  const upcoming = useCategory("movie", "upcoming");
+  const recent = useRecent();
 
-  const { items: top_rated } = useTopList();
-  const { items: movies } = useMoviesList(search);
+  // old links used /?q=... for search
+  if (params.get("q")) return <Navigate to={`/search?q=${encodeURIComponent(params.get("q")!)}`} replace />;
 
-  const advancedNavigate = (path: string, sets: string[][] = [], removes: string[] = []) => {
-    const params = new URLSearchParams(location.search);
-    sets.forEach(([key, value]) => params.set(key, value));
-    removes.forEach(key => params.delete(key));
-    navigate(path + "?" + params.toString());
-  };
-
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
-    advancedNavigate("", [["q", value]]);
-  };
-
-  const debouncedSearch = debounce(handleSearch, 300);
+  const featured = trending.items.find(item => item.backdrop_path);
 
   return (
     <>
       <Helmet>
-        <title>Posters</title>
+        <title>Posters — movie & TV posters, backdrops and logos</title>
       </Helmet>
 
       <main>
-        <div className="container">
-          <div className="pt-3 md:pt-10 mb-2">
-            <h1 className="text-center text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-semibold pt-3 mb-5 md:mb-10">
-              Posters
-            </h1>
-
-            <Input
-              className={cx("max-w-2xl mx-auto", movies.length && "mb-16")}
-              defaultValue={search}
-              ref={searchInputRef}
-              onChange={debouncedSearch}
-              placeholder="Search..."
-              autoFocus
-              type="search"
-            />
-          </div>
-
-          {!movies.length && (
-            <p className="text-center text-sm md:text-md lg:text-xl mb-8">
-              Search for any movie poster you want...
-            </p>
+        <section className="relative isolate overflow-hidden">
+          {featured ? (
+            <>
+              <img
+                src={imageUrl(featured.backdrop_path, "w1280")}
+                alt=""
+                className="absolute inset-0 -z-10 size-full object-cover object-top opacity-50"
+              />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/10" />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/30 to-transparent" />
+            </>
+          ) : (
+            <div className="absolute inset-0 -z-10 animate-pulse bg-slate-900" />
           )}
 
-          <div className="flex justify-center items-center flex-wrap py-5 gap-1 sm:gap-4 rounded">
-            {movies.length ? (
+          <div className="container flex min-h-[340px] flex-col justify-end py-8 sm:min-h-[440px] sm:py-12">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-300">
+              Trending today
+            </p>
+            {featured ? (
               <>
-                {movies.map(movie => (
-                  <Card
-                    className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
-                    key={movie.id}
-                  >
-                    <LazyImage
-                      className="w-full aspect-[2/3]"
-                      src={movie.poster_path}
-                      alt={movie.title}
-                    />
-                    <Link className="absolute inset-0" to={`/${movie.type}/${movie.id}`} />
-                  </Card>
-                ))}
+                <h1 className="max-w-2xl text-3xl font-bold leading-tight sm:text-5xl">
+                  {featured.title}
+                </h1>
+                <div className="mt-2 flex items-center gap-3 text-sm text-slate-300">
+                  <Rating value={featured.vote_average} />
+                  <span>{getYear(featured.release_date)}</span>
+                  <span>{featured.type === "tv" ? "TV Show" : "Movie"}</span>
+                </div>
+                <p className="mt-3 line-clamp-2 max-w-xl text-sm text-slate-300 sm:line-clamp-3 sm:text-base">
+                  {featured.overview}
+                </p>
+                <Link
+                  to={`/${featured.type}/${featured.id}`}
+                  className={buttonVariants({ className: "mt-5 w-full xs:w-fit" })}
+                >
+                  <Info className="mr-2 size-4" /> Posters & details
+                </Link>
               </>
             ) : (
-              <>
-                {top_rated.map(movie => (
-                  <Card
-                    className="max-w-[47%] xs:max-w-[200px] md:max-w-[220px] p-2 w-full relative"
-                    key={movie.id}
-                  >
-                    <LazyImage
-                      className="w-full aspect-[2/3]"
-                      src={movie.poster_path}
-                      alt={movie.title}
-                    />
-                    <Link className="absolute inset-0" to={`/${movie.type}/${movie.id}`} />
-                  </Card>
-                ))}
-              </>
+              <div className="h-24" />
             )}
           </div>
-        </div>
+        </section>
+
+        <MediaRow
+          title="Recently viewed"
+          items={recent.items}
+          action={
+            <button
+              type="button"
+              onClick={recent.clear}
+              className="text-sm text-slate-400 transition-colors hover:text-slate-50"
+            >
+              Clear
+            </button>
+          }
+        />
+        <MediaRow title="Trending today" items={trending.items} isLoading={trending.isLoading} />
+        <MediaRow
+          title="Popular movies"
+          items={popularMovies.items}
+          isLoading={popularMovies.isLoading}
+          href="/discover?type=movie"
+        />
+        <MediaRow
+          title="Popular TV shows"
+          items={popularTv.items}
+          isLoading={popularTv.isLoading}
+          href="/discover?type=tv"
+        />
+        <MediaRow
+          title="Anime"
+          items={anime.items}
+          isLoading={anime.isLoading}
+          href={`/discover?type=tv&genre=${ANIME_GENRE_ID}&lang=${ANIME_LANGUAGE}`}
+        />
+        <MediaRow
+          title="Top rated movies"
+          items={topRated.items}
+          isLoading={topRated.isLoading}
+          href="/discover?type=movie&sort=vote_average.desc"
+        />
+        <MediaRow title="Upcoming movies" items={upcoming.items} isLoading={upcoming.isLoading} />
       </main>
     </>
   );

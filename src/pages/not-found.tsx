@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Link, useLocation } from "react-router-dom";
 
-import { buttonVariants } from "@/components/ui";
+import { buttonVariants } from "@/components/ui/button";
 
 const NotFound = () => {
   const { pathname: route } = useLocation();
